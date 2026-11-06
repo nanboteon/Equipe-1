@@ -4,13 +4,13 @@ Andamento da equipe 1 com o projeto final de Rquisitos, Modelagem e Análise de 
 # Cronograma de Atividades - Equipe TaskFlow (Unidade 3)
 
 **Cenário:** Grupo 01 - TaskFlow (Controle de Tarefas Corporativas)
-**Integrantes:** Mariah, Laura, Elizama, Karla, Annanda e Caio
+**Integrantes:** Mariah, Laura, Elisama, Karla, Annanda e Caio
 
 | Marco / Etapa | Responsável(is) | Detalhamento da Atividade Efetiva | Prazo Interno | Prazo Oficial | Status |
 | :--- | :--- | :--- | :---: | :---: | :---: |
 | **01. Produção Assíncrona** | Mariah | Formalização do Catálogo de RN (`00_catalogo_rn.md`) e Inventário de Dados (`01_inventario_dados.md`) | 06/11/2026 | 06/11/2026 | Em Andamento |
 | **01. Produção Assíncrona** | Laura | Elaboração do Diagrama do Modelo Conceitual v1 (`02_modelo_conceitual_v1`) | 06/11/2026 | 06/11/2026 | Em Andamento |
-| **01. Produção Assíncrona** | Elizama | Redação do documento de Decisões de Modelagem (`03_decisoes_modelagem.md`) | 06/11/2026 | 06/11/2026 | Em Andamento |
+| **01. Produção Assíncrona** | Elisama | Redação do documento de Decisões de Modelagem (`03_decisoes_modelagem.md`) | 06/11/2026 | 06/11/2026 | Em Andamento |
 | **01. Produção Assíncrona** | Karla | Estruturação do Modelo Lógico Relacional v1 (`04_modelo_logico_v1`) | 06/11/2026 | 06/11/2026 | Em Andamento |
 | **01. Produção Assíncrona** | Annanda | Construção do Dicionário de Dados v1 (`05_dicionario_dados_v1.md`) | 06/11/2026 | 06/11/2026 | Em Andamento |
 | **01. Produção Assíncrona** | Caio | Redação de Regras de Integridade (`06_regras_integridade.md`) e setup do repositório no GitHub | 06/11/2026 | 06/11/2026 | Em Andamento |
