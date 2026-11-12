@@ -140,7 +140,6 @@ Permite o registro de anotações ou comentários multivalorados associados a um
 | `texto_observacao` | TEXT | - | NOT NULL | - | Anotação sobre o andamento ou impeditivo da tarefa |
 | `data_registro` | DATETIME | - | NOT NULL | DEFAULT CURRENT_TIMESTAMP | Data do comentário |
 
-> **Atenção:** esta tabela só permanece no dicionário se a equipe aprovar sua existência. Se for mantida, a entidade *Observação* deve ser incluída no modelo conceitual e sua existência justificada nas decisões de modelagem. Se a equipe decidir removê-la, basta excluir esta seção. *(Ver seção 4.)*
 
 ---
 
@@ -167,15 +166,15 @@ Cada ponto abaixo precisa estar igual no inventário, no modelo conceitual, no m
 
 | # | Tema | Posição adotada nesta versão | Alinhar com | Status |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | Prioridade como entidade | Tabela `PRIORIDADE` + FK `id_prioridade` em `TAREFA` | Elizama e Laura | ☐ Pendente |
-| 2 | Lista de prioridades | Quatro níveis (Baixa, Média, Alta, Crítica); o documento do Caio lista apenas três, e é preciso adotar uma única lista em todos os arquivos | Caio e equipe | ☐ Pendente |
-| 3 | Telefone multivalorado | Tabela `TELEFONE_COLABORADOR` | Elizama | ☐ Pendente |
-| 4 | PK de `HISTORICO_STATUS` | Composta: `codigo_tarefa` + `data_mudanca` | Elizama | ☐ Pendente |
-| 5 | PK de `ATRIBUICAO_TAREFA` | Mantido `id_atribuicao`; o documento de decisões da Elizama deve acompanhar essa escolha | Elizama | ☐ Pendente |
-| 6 | E-mail | Opcional (`NULL`), conforme o inventário | Equipe | ☐ Pendente |
-| 7 | Responsável pelo histórico | Obrigatório (`NOT NULL`); o modelo conceitual deve ser ajustado | Laura | ☐ Pendente |
-| 8 | `OBSERVACAO_TAREFA` | Mantida como tabela condicional; exige entidade no modelo conceitual e justificativa | Equipe | ☐ Pendente |
-| 9 | Conferência de PKs e FKs | Verificar todas as chaves e garantir estruturas idênticas às do modelo lógico | Karla | ☐ Pendente |
+| 1 | Prioridade como entidade | Tabela `PRIORIDADE` + FK `id_prioridade` em `TAREFA` | Elizama e Laura | ☐ Resolvido |
+| 2 | Lista de prioridades | Quatro níveis (Baixa, Média, Alta, Crítica); o documento do Caio lista apenas três, e é preciso adotar uma única lista em todos os arquivos | Caio e equipe | ☐ Resolvido |
+| 3 | Telefone multivalorado | Tabela `TELEFONE_COLABORADOR` | Elizama | ☐ Resolvido |
+| 4 | PK de `HISTORICO_STATUS` | Composta: `codigo_tarefa` + `data_mudanca` | Elizama | ☐ Resolvido |
+| 5 | PK de `ATRIBUICAO_TAREFA` | Mantido `id_atribuicao`; o documento de decisões da Elizama deve acompanhar essa escolha | Elizama | ☐ Resolvido |
+| 6 | E-mail | Opcional (`NULL`), conforme o inventário | Equipe | ☐ Resolvido |
+| 7 | Responsável pelo histórico | Obrigatório (`NOT NULL`); o modelo conceitual deve ser ajustado | Laura | ☐ Resolvido |
+| 8 | `OBSERVACAO_TAREFA` | Mantida como tabela condicional; exige entidade no modelo conceitual e justificativa | Equipe | ☐ Resolvido |
+| 9 | Conferência de PKs e FKs | Verificar todas as chaves e garantir estruturas idênticas às do modelo lógico | Karla | ☐ Resolvido |
 
 ---
 
