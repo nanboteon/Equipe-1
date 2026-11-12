@@ -130,7 +130,7 @@ Registra cada mudança de status sofrida por uma tarefa para garantir o acompanh
 
 ---
 
-### 2.8. Tabela: `OBSERVACAO_TAREFA` *(condicional)*
+### 2.8. Tabela: `OBSERVACAO_TAREFA` 
 Permite o registro de anotações ou comentários multivalorados associados a uma tarefa ao longo do tempo.
 
 | Nome do Atributo | Tipo de Dado | Tamanho | Requisito / Nulo | Restrição / Chave | Descrição |
