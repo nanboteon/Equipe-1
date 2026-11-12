@@ -41,7 +41,7 @@ Cadastra os colaboradores que realizam ou gerenciam as tarefas no sistema.
 | `email` | VARCHAR | 150 | NULL | UNIQUE | E-mail corporativo do colaborador (**opcional**) |
 | `id_setor` | INT | - | NOT NULL | FK (`SETOR.id_setor`) | Setor ao qual o colaborador está vinculado |
 
-> **Alteração v1:** `email` passou de `NOT NULL` para opcional (`NULL`), alinhando o dicionário ao inventário de dados. O `UNIQUE` foi mantido e só se aplica quando o e-mail é preenchido. *(Decisão a ser confirmada pela equipe, ver seção 4.)*
+> **Alteração v1:** `email` passou de `NOT NULL` para opcional (`NULL`), alinhando o dicionário ao inventário de dados. O `UNIQUE` foi mantido e só se aplica quando o e-mail é preenchido. 
 
 ---
 
@@ -67,7 +67,7 @@ Representa **Prioridade** como entidade própria, centralizando em um único lug
 | `nome_prioridade` | VARCHAR | 10 | NOT NULL | UNIQUE | Nome do nível de prioridade |
 | `descricao` | VARCHAR | 100 | NULL | - | Descrição do critério de uso da prioridade |
 
-**Valores iniciais propostos** *(lista única, a ser confirmada pela equipe)*:
+**Valores iniciais propostos** 
 
 | id_prioridade | nome_prioridade |
 | :--- | :--- |
@@ -124,9 +124,9 @@ Registra cada mudança de status sofrida por uma tarefa para garantir o acompanh
 
 **Chave primária composta:** (`codigo_tarefa`, `data_mudanca`). Como a entidade é fraca, sua identificação depende da tarefa à qual pertence somada ao momento da mudança.
 
-> **Alteração v1:** a PK `id_historico` foi removida e substituída pela chave composta acima, alinhando o dicionário à proposta da Elizama. O campo `data_mudanca` deve guardar data **e hora**, para que duas mudanças da mesma tarefa no mesmo dia não colidam.
+> **Alteração v1:** a PK `id_historico` foi removida e substituída pela chave composta acima, alinhando o dicionário à proposta da Elisama. O campo `data_mudanca` deve guardar data **e hora**, para que duas mudanças da mesma tarefa no mesmo dia não colidam.
 >
-> **Autoria:** `matricula_responsavel` permanece obrigatório, isto é, toda alteração de status tem um colaborador responsável. O modelo conceitual deve ser ajustado para refletir isso. *(Decisão a ser confirmada com a Laura, ver seção 4.)*
+> **Autoria:** `matricula_responsavel` permanece obrigatório, isto é, toda alteração de status tem um colaborador responsável. O modelo conceitual deve ser ajustado para refletir isso. 
 
 ---
 
