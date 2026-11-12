@@ -83,7 +83,7 @@ O relatório final do projeto será elaborado e disponibilizado posteriormente, 
 
 - **Instituição:** Católica SC
 - **Curso:** Engenharia de Software
-- **Período:** 1º período
+- **Período:** 2º período
 - **Disciplina:** Requisitos, Modelagem e Análise de Dados
 - **Professor:** Edson Vaz Lopes
 - **Projeto:** Unidade 3 — TaskFlow
