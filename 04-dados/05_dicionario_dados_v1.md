@@ -1,10 +1,10 @@
-[05_dicionario_dados_revisado_v1.md](https://github.com/user-attachments/files/34723487/05_dicionario_dados_revisado_v1.md)
+[05_dicionario_dados_atualizado_v1.md](https://github.com/user-attachments/files/34724227/05_dicionario_dados_atualizado_v1.md)
 
 # 05_dicionario_dados_v1.md — Dicionário de Dados v1
 
 **Projeto:** TaskFlow - Controle de Tarefas Corporativas  
 **Equipe:** Mariah, Laura, Elisama, Karla, Annanda e Caio  
-**Responsável pelo documento:** Annanda Boteon 
+**Responsável pelo documento:** Annanda  
 **Versão:** 1.0  
 **Data:** 11/11/2026  
 
@@ -39,7 +39,7 @@ Cadastra os colaboradores que realizam ou gerenciam as tarefas no sistema.
 | `matricula` | INT | Auto | NOT NULL | PK, Auto Increment | Matrícula única de identificação do colaborador |
 | `nome` | VARCHAR | 150 | NOT NULL | - | Nome completo do colaborador |
 | `email` | VARCHAR | 150 | NULL | UNIQUE | E-mail corporativo do colaborador (**opcional**) |
-| `id_setor` | INT | Auto | NOT NULL | FK (`SETOR.id_setor`) | Setor ao qual o colaborador está vinculado |
+| `id_setor` | INT | - | NOT NULL | FK (`SETOR.id_setor`) | Setor ao qual o colaborador está vinculado |
 
 > **Alteração v1:** `email` passou de `NOT NULL` para opcional (`NULL`), alinhando o dicionário ao inventário de dados. O `UNIQUE` foi mantido e só se aplica quando o e-mail é preenchido. *(Decisão a ser confirmada pela equipe, ver seção 4.)*
 
@@ -50,7 +50,7 @@ Representa o atributo multivalorado **Telefone** do colaborador, permitindo que 
 
 | Nome do Atributo | Tipo de Dado | Tamanho | Requisito / Nulo | Restrição / Chave | Descrição |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `matricula_colaborador` | INT | Auto | NOT NULL | PK (composta), FK (`COLABORADOR.matricula`) | Matrícula do colaborador dono do telefone |
+| `matricula_colaborador` | INT | - | NOT NULL | PK (composta), FK (`COLABORADOR.matricula`) | Matrícula do colaborador dono do telefone |
 | `numero_telefone` | VARCHAR | 20 | NOT NULL | PK (composta) | Número de telefone com DDD |
 
 **Chave primária composta:** (`matricula_colaborador`, `numero_telefone`).  
@@ -87,7 +87,7 @@ Registra as tarefas criadas no TaskFlow, seus prazos, prioridades e status atual
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `codigo_tarefa` | INT | Auto | NOT NULL | PK, Auto Increment | Código único de identificação da tarefa |
 | `descricao` | TEXT | - | NOT NULL | - | Detalhamento sobre o que precisa ser feito |
-| `id_prioridade` | INT | Auto | NOT NULL | FK (`PRIORIDADE.id_prioridade`) | Prioridade da tarefa |
+| `id_prioridade` | INT | - | NOT NULL | FK (`PRIORIDADE.id_prioridade`) | Prioridade da tarefa |
 | `prazo_limite` | DATETIME | - | NOT NULL | - | Data e hora limite para a conclusão |
 | `status_atual` | VARCHAR | 20 | NOT NULL | DEFAULT 'Pendente', CHECK (`status_atual` IN ('Pendente', 'Em Andamento', 'Concluída')) | Status vigente da tarefa no fluxo |
 | `data_criacao` | DATETIME | - | NOT NULL | DEFAULT CURRENT_TIMESTAMP | Registro de quando a tarefa foi cadastrada |
@@ -102,8 +102,8 @@ Resolve o relacionamento N:N entre `COLABORADOR` e `TAREFA`. Registra o históri
 | Nome do Atributo | Tipo de Dado | Tamanho | Requisito / Nulo | Restrição / Chave | Descrição |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `id_atribuicao` | INT | Auto | NOT NULL | PK, Auto Increment | Identificador único do registro de atribuição |
-| `codigo_tarefa` | INT | Auto | NOT NULL | FK (`TAREFA.codigo_tarefa`) | Código da tarefa atribuída |
-| `matricula_colaborador` | INT | Auto | NOT NULL | FK (`COLABORADOR.matricula`) | Matrícula do colaborador responsável |
+| `codigo_tarefa` | INT | - | NOT NULL | FK (`TAREFA.codigo_tarefa`) | Código da tarefa atribuída |
+| `matricula_colaborador` | INT | - | NOT NULL | FK (`COLABORADOR.matricula`) | Matrícula do colaborador responsável |
 | `data_atribuicao` | DATETIME | - | NOT NULL | DEFAULT CURRENT_TIMESTAMP | Data e hora exatas em que a atribuição foi realizada |
 | `papel_na_tarefa` | VARCHAR | 30 | NULL | DEFAULT 'Executor' | Função exercida pelo colaborador (ex: Executor, Revisor) |
 
@@ -116,11 +116,11 @@ Registra cada mudança de status sofrida por uma tarefa para garantir o acompanh
 
 | Nome do Atributo | Tipo de Dado | Tamanho | Requisito / Nulo | Restrição / Chave | Descrição |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `codigo_tarefa` | INT | Auto | NOT NULL | PK (composta), FK (`TAREFA.codigo_tarefa`) | Código da tarefa monitorada |
+| `codigo_tarefa` | INT | - | NOT NULL | PK (composta), FK (`TAREFA.codigo_tarefa`) | Código da tarefa monitorada |
 | `data_mudanca` | DATETIME | - | NOT NULL | PK (composta), DEFAULT CURRENT_TIMESTAMP | Data e hora em que a transição ocorreu |
 | `status_anterior` | VARCHAR | 20 | NULL | CHECK (`status_anterior` IN ('Pendente', 'Em Andamento', 'Concluída')) | Status de onde a tarefa estava saindo |
 | `status_novo` | VARCHAR | 20 | NOT NULL | CHECK (`status_novo` IN ('Pendente', 'Em Andamento', 'Concluída')) | Novo status assumido |
-| `matricula_responsavel` | INT | Auto | NOT NULL | FK (`COLABORADOR.matricula`) | Quem realizou a alteração de status |
+| `matricula_responsavel` | INT | - | NOT NULL | FK (`COLABORADOR.matricula`) | Quem realizou a alteração de status |
 
 **Chave primária composta:** (`codigo_tarefa`, `data_mudanca`). Como a entidade é fraca, sua identificação depende da tarefa à qual pertence somada ao momento da mudança.
 
@@ -136,7 +136,7 @@ Permite o registro de anotações ou comentários multivalorados associados a um
 | Nome do Atributo | Tipo de Dado | Tamanho | Requisito / Nulo | Restrição / Chave | Descrição |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `id_observacao` | INT | Auto | NOT NULL | PK, Auto Increment | Identificador da observação |
-| `codigo_tarefa` | INT | Auto | NOT NULL | FK (`TAREFA.codigo_tarefa`) | Tarefa vinculada |
+| `codigo_tarefa` | INT | - | NOT NULL | FK (`TAREFA.codigo_tarefa`) | Tarefa vinculada |
 | `texto_observacao` | TEXT | - | NOT NULL | - | Anotação sobre o andamento ou impeditivo da tarefa |
 | `data_registro` | DATETIME | - | NOT NULL | DEFAULT CURRENT_TIMESTAMP | Data do comentário |
 
