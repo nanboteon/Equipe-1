@@ -166,15 +166,15 @@ Cada ponto abaixo precisa estar igual no inventário, no modelo conceitual, no m
 
 | # | Tema | Posição adotada nesta versão | Alinhar com | Status |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | Prioridade como entidade | Tabela `PRIORIDADE` + FK `id_prioridade` em `TAREFA` | Elizama e Laura | ☐ Resolvido |
-| 2 | Lista de prioridades | Quatro níveis (Baixa, Média, Alta, Crítica); o documento do Caio lista apenas três, e é preciso adotar uma única lista em todos os arquivos | Caio e equipe | ☐ Resolvido |
-| 3 | Telefone multivalorado | Tabela `TELEFONE_COLABORADOR` | Elizama | ☐ Resolvido |
-| 4 | PK de `HISTORICO_STATUS` | Composta: `codigo_tarefa` + `data_mudanca` | Elizama | ☐ Resolvido |
-| 5 | PK de `ATRIBUICAO_TAREFA` | Mantido `id_atribuicao`; o documento de decisões da Elizama deve acompanhar essa escolha | Elizama | ☐ Resolvido |
-| 6 | E-mail | Opcional (`NULL`), conforme o inventário | Equipe | ☐ Resolvido |
-| 7 | Responsável pelo histórico | Obrigatório (`NOT NULL`); o modelo conceitual deve ser ajustado | Laura | ☐ Resolvido |
-| 8 | `OBSERVACAO_TAREFA` | Mantida como tabela condicional; exige entidade no modelo conceitual e justificativa | Equipe | ☐ Resolvido |
-| 9 | Conferência de PKs e FKs | Verificar todas as chaves e garantir estruturas idênticas às do modelo lógico | Karla | ☐ Resolvido |
+| 1 | Prioridade como entidade | Tabela `PRIORIDADE` + FK `id_prioridade` em `TAREFA` | Elizama e Laura | ✓ Resolvido |
+| 2 | Lista de prioridades | Quatro níveis (Baixa, Média, Alta, Crítica); o documento do Caio lista apenas três, e é preciso adotar uma única lista em todos os arquivos | Caio e equipe | ✓ Resolvido |
+| 3 | Telefone multivalorado | Tabela `TELEFONE_COLABORADOR` | Elizama | ✓ Resolvido |
+| 4 | PK de `HISTORICO_STATUS` | Composta: `codigo_tarefa` + `data_mudanca` | Elizama | ✓ Resolvido |
+| 5 | PK de `ATRIBUICAO_TAREFA` | Mantido `id_atribuicao`; o documento de decisões da Elizama deve acompanhar essa escolha | Elizama | ✓ Resolvido |
+| 6 | E-mail | Opcional (`NULL`), conforme o inventário | Equipe | ✓ Resolvido |
+| 7 | Responsável pelo histórico | Obrigatório (`NOT NULL`); o modelo conceitual deve ser ajustado | Laura | ✓ Resolvido |
+| 8 | `OBSERVACAO_TAREFA` | Mantida como tabela condicional; exige entidade no modelo conceitual e justificativa | Equipe | ✓ Resolvido |
+| 9 | Conferência de PKs e FKs | Verificar todas as chaves e garantir estruturas idênticas às do modelo lógico | Karla | ✓ Resolvido |
 
 ---
 
