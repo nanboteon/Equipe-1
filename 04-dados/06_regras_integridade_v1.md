@@ -1,118 +1,168 @@
-# 06 — Especificação das Regras de Integridade e Restrições de Domínio
+# 06 — Regras de Integridade e Restrições de Domínio
 
 ## 1. Objetivo
 
-Este documento apresenta as regras de integridade, as restrições de domínio e o fluxo de status do sistema **TaskFlow – Controle de Tarefas Corporativas**.
+Este documento define as regras de integridade, as restrições de domínio e o fluxo de status do sistema **TaskFlow – Controle de Tarefas Corporativas**, considerando seu modelo atual de banco de dados.
 
-A especificação considera as entidades **Tarefa** e **Colaborador**, além da entidade associativa **Atribuição**, responsável por representar o relacionamento entre tarefas e colaboradores.
+O modelo é composto por oito tabelas: `SETOR`, `COLABORADOR`, `PRIORIDADE`, `TAREFA`, `TELEFONE_COLABORADOR`, `HISTORICO_STATUS`, `OBSERVACAO_TAREFA` e `ATRIBUICAO_TAREFA`.
 
-## 2. Regras de Integridade
+## 2. Estrutura e regras de integridade das tabelas
 
-As regras de integridade definem as condições que devem ser respeitadas para garantir a consistência dos dados armazenados no sistema.
+### 2.1. SETOR
 
-| Código | Regra |
+Armazena os setores da organização.
+
+- Deve possuir uma chave primária única, conforme definida no modelo.
+- Os atributos obrigatórios devem ser preenchidos.
+- Um setor pode estar relacionado a vários colaboradores.
+
+### 2.2. COLABORADOR
+
+Armazena os dados dos colaboradores.
+
+- Deve possuir uma chave primária única, conforme definida no modelo.
+- Os dados obrigatórios do colaborador devem ser preenchidos.
+- Deve possuir referência válida a um registro de `SETOR`.
+- Pode estar relacionado a vários telefones e atribuições, conforme o modelo.
+
+### 2.3. PRIORIDADE
+
+Armazena os níveis de prioridade disponíveis.
+
+- Possui `id_prioridade` como chave primária.
+- Cada identificador deve ser único.
+- Os registros devem representar prioridades válidas.
+- Uma prioridade pode estar relacionada a várias tarefas.
+
+Os níveis previstos são Baixa, Média, Alta e Crítica, sujeitos à confirmação dos valores cadastrados no modelo atual.
+
+### 2.4. TAREFA
+
+Armazena as tarefas do sistema.
+
+- Possui `codigo_tarefa` como chave primária.
+- O atributo `descricao` deve ser preenchido.
+- O atributo `status_atual` deve conter um status permitido.
+- O atributo `id_prioridade` deve referenciar um registro existente em `PRIORIDADE`.
+- Uma tarefa pode possuir históricos, observações e atribuições.
+
+### 2.5. TELEFONE_COLABORADOR
+
+Armazena os telefones relacionados aos colaboradores.
+
+- Deve possuir uma chave primária definida no modelo.
+- Deve possuir uma chave estrangeira que referencie um colaborador existente.
+- O número deve respeitar o formato e as restrições definidos para o atributo.
+- Um colaborador pode possuir mais de um registro de telefone, caso permitido pelo modelo.
+
+### 2.6. HISTORICO_STATUS
+
+Armazena as alterações de status das tarefas.
+
+- Deve possuir uma chave primária própria.
+- Deve possuir uma chave estrangeira que referencie uma tarefa existente.
+- Deve registrar um status válido.
+- Os campos de data e horário devem respeitar os tipos definidos no modelo.
+- Os registros anteriores devem ser preservados para manter o histórico das alterações.
+
+### 2.7. OBSERVACAO_TAREFA
+
+Armazena observações relacionadas às tarefas.
+
+- Deve possuir uma chave primária própria.
+- Deve possuir uma chave estrangeira que referencie uma tarefa existente.
+- O conteúdo deve ser preenchido quando definido como obrigatório.
+- Uma tarefa pode possuir várias observações.
+
+### 2.8. ATRIBUICAO_TAREFA
+
+Relaciona tarefas e colaboradores.
+
+- Possui `id_atribuicao` como chave primária.
+- Deve possuir uma chave estrangeira que referencie uma tarefa existente.
+- Deve possuir uma chave estrangeira que referencie um colaborador existente.
+- Deve permitir diferentes registros de atribuição para a mesma tarefa e o mesmo colaborador.
+- Não deve existir restrição de unicidade sobre a combinação entre tarefa e colaborador, pois cada atribuição é identificada individualmente por `id_atribuicao`.
+
+## 3. Integridade referencial
+
+As chaves estrangeiras devem garantir que os relacionamentos apontem para registros existentes.
+
+| Relacionamento | Regra |
 |---|---|
-| RI-01 | Cada Tarefa deve possuir um identificador único (`id_tarefa`), utilizado como chave primária. |
-| RI-02 | Cada Colaborador deve possuir uma matrícula única (`matricula`), utilizada como identificador. |
-| RI-03 | Os atributos obrigatórios de Tarefa e Colaborador devem ser preenchidos antes do cadastro. |
-| RI-04 | Cada registro de Atribuição deve referenciar uma Tarefa e um Colaborador existentes. |
-| RI-05 | O relacionamento entre Tarefa e Colaborador deve ser representado pela entidade associativa Atribuição, permitindo que uma tarefa seja relacionada a um ou mais colaboradores. |
-| RI-06 | Não deve existir mais de uma associação entre a mesma Tarefa e o mesmo Colaborador. |
-| RI-07 | Toda alteração de status de uma Tarefa deve respeitar o fluxo de transições definido neste documento. |
+| SETOR – COLABORADOR | O setor referenciado pelo colaborador deve existir. |
+| PRIORIDADE – TAREFA | A prioridade da tarefa deve existir na tabela PRIORIDADE. |
+| COLABORADOR – TELEFONE_COLABORADOR | O telefone deve pertencer a um colaborador existente. |
+| TAREFA – HISTORICO_STATUS | O histórico deve estar associado a uma tarefa existente. |
+| TAREFA – OBSERVACAO_TAREFA | A observação deve estar associada a uma tarefa existente. |
+| TAREFA – ATRIBUICAO_TAREFA | A atribuição deve referenciar uma tarefa existente. |
+| COLABORADOR – ATRIBUICAO_TAREFA | A atribuição deve referenciar um colaborador existente. |
 
-## 3. Restrições de Domínio
+As operações de exclusão e atualização não devem gerar referências inválidas entre as tabelas. A política específica deve seguir o modelo e as regras de negócio aprovadas.
 
-As restrições de domínio determinam quais valores são permitidos para os atributos das entidades do sistema.
+## 4. Restrições de domínio
 
-### 3.1. Entidade Tarefa
+Os atributos devem respeitar os tipos de dados e os valores permitidos definidos no modelo.
 
-| Atributo | Restrição |
+| Tabela | Restrições principais |
 |---|---|
-| `id_tarefa` | Obrigatório e único. |
-| `descricao` | Obrigatória. Deve descrever a tarefa. |
-| `status` | Deve aceitar exclusivamente: Pendente, Em Andamento ou Concluída. |
-| `prioridade` | Deve aceitar: Baixa, Média, Alta ou Crítica, sujeito à confirmação da equipe. |
-| `data_criacao` | Deve representar uma data válida, quando utilizada. |
+| SETOR | Identificador único e dados obrigatórios preenchidos. |
+| COLABORADOR | Identificador único, dados obrigatórios e setor válido. |
+| PRIORIDADE | `id_prioridade` único e identificação válida da prioridade. |
+| TAREFA | `codigo_tarefa` único, `descricao` preenchida, `status_atual` válido e `id_prioridade` existente. |
+| TELEFONE_COLABORADOR | Identificador único, colaborador existente e número válido. |
+| HISTORICO_STATUS | Identificador único, tarefa existente, status válido e data válida. |
+| OBSERVACAO_TAREFA | Identificador único, tarefa existente e conteúdo conforme obrigatoriedade definida. |
+| ATRIBUICAO_TAREFA | `id_atribuicao` único e referências válidas a tarefa e colaborador. |
 
-### 3.2. Entidade Colaborador
+Os atributos obrigatórios não podem ser nulos ou vazios. Os opcionais podem permanecer sem preenchimento quando permitido pelo modelo.
 
-| Atributo | Restrição |
-|---|---|
-| `matricula` | Obrigatória e única. |
-| `nome` | Obrigatório. |
-| `setor` | Deve identificar o setor ao qual o colaborador pertence. |
+A lista definitiva de atributos obrigatórios e opcionais deve corresponder ao dicionário de dados oficial.
 
-### 3.3. Entidade Atribuição
+## 5. Fluxo de status
 
-A entidade Atribuição representa o relacionamento entre Tarefa e Colaborador.
-
-| Atributo | Restrição |
-|---|---|
-| `id_tarefa` | Deve referenciar uma Tarefa existente, por meio de chave estrangeira. |
-| `matricula` | Deve referenciar um Colaborador existente, por meio de chave estrangeira. |
-| Combinação dos atributos | A combinação `id_tarefa` + `matricula` deve ser única, evitando associações duplicadas. |
-
-### 3.4. Restrições relacionadas às datas
-
-As datas registradas pelo sistema devem possuir valores válidos.
-
-Não será imposta uma regra que obrigue a data de vencimento a ser posterior ou igual à data de criação sem que essa condição seja aprovada como regra de negócio pela equipe.
-
-## 4. Fluxo de Status das Tarefas
-
-O sistema deve possuir exclusivamente três status para representar a situação de uma tarefa:
+O atributo `status_atual`, da tabela `TAREFA`, deve aceitar exclusivamente os seguintes valores:
 
 | Status | Descrição |
 |---|---|
-| **Pendente** | A tarefa foi cadastrada, mas sua execução ainda não foi iniciada. |
-| **Em Andamento** | A execução da tarefa foi iniciada e está em progresso. |
-| **Concluída** | A execução da tarefa foi finalizada. |
+| Pendente | Tarefa cadastrada, ainda não iniciada. |
+| Em Andamento | Tarefa cuja execução foi iniciada. |
+| Concluída | Tarefa cuja execução foi finalizada. |
 
-### 4.1. Transições permitidas
+### 5.1. Transições permitidas
 
-As mudanças de status devem seguir uma sequência definida, sem permitir que etapas sejam ignoradas.
-
-| Status atual | Próximo status permitido |
+| Status atual | Próximo status |
 |---|---|
 | Pendente | Em Andamento |
 | Em Andamento | Concluída |
-| Concluída | Nenhum |
+| Concluída | Nenhum. É o estado final. |
 
-### 4.2. Regras do fluxo de status
+### 5.2. Regras do fluxo
 
-- **RS-01:** Toda tarefa deve ser iniciada com o status Pendente.
-- **RS-02:** Uma tarefa Pendente pode passar para Em Andamento.
-- **RS-03:** Uma tarefa Em Andamento pode passar para Concluída.
-- **RS-04:** Não é permitido pular etapas do fluxo de status.
-- **RS-05:** Não estão previstos os status Em Revisão ou Cancelada na especificação atual.
+- Toda tarefa deve iniciar como Pendente.
+- Uma tarefa Pendente pode passar para Em Andamento.
+- Uma tarefa Em Andamento pode passar para Concluída.
+- Não é permitido pular etapas.
+- Não são permitidos status adicionais sem aprovação e atualização da especificação.
 
-## 5. Relação com as Regras de Negócio
+Toda alteração deve ser registrada em `HISTORICO_STATUS`, preservando os registros anteriores e mantendo a consistência com `status_atual`.
 
-As regras de integridade e as restrições de domínio devem estar alinhadas às regras de negócio do projeto.
+## 6. Relação com as regras de negócio
 
-A correspondência com as regras RN-01, RN-02 e RN-03 deve ser conferida com a documentação oficial da equipe, pois seus conteúdos precisam ser considerados antes de estabelecer uma relação definitiva.
+As regras de integridade devem estar alinhadas ao catálogo oficial do TaskFlow.
 
-| Regra de negócio | Validação necessária |
-|---|---|
-| RN-01 | Conferir o conteúdo e verificar sua relação com as regras de integridade. |
-| RN-02 | Conferir o conteúdo e verificar sua relação com as restrições de domínio. |
-| RN-03 | Conferir o conteúdo e verificar sua relação com o fluxo de status. |
+As regras RN-01, RN-02 e RN-03 devem ser conferidas em sua versão atual para garantir que não existam divergências entre as regras de negócio, as restrições do banco de dados e os relacionamentos.
 
-## 6. Pontos para Validação com a Equipe
+Não devem ser atribuídas definições presumidas a essas regras sem consultar o catálogo oficial.
 
-Antes da finalização da documentação, os seguintes pontos devem ser confirmados:
+## 7. Considerações finais
 
-1. **Prioridade:** confirmar com Annanda e Elisama se os valores Baixa, Média, Alta e Crítica serão utilizados definitivamente.
-2. **Atributos:** confirmar os nomes e a estrutura dos atributos das entidades Tarefa e Colaborador.
-3. **Atribuição:** validar a estrutura da entidade associativa e suas chaves.
-4. **Regras de negócio:** conferir o conteúdo oficial de RN-01, RN-02 e RN-03.
+As regras apresentadas buscam garantir a integridade dos dados e a consistência dos relacionamentos entre as oito tabelas do TaskFlow.
 
-## 7. Considerações Finais
+As chaves primárias identificam individualmente os registros, enquanto as chaves estrangeiras asseguram a validade dos relacionamentos.
 
-A especificação estabelece as condições necessárias para manter a integridade e a consistência das informações do TaskFlow.
+A tabela `ATRIBUICAO_TAREFA` utiliza `id_atribuicao` para identificar cada atribuição, permitindo registros distintos entre a mesma tarefa e o mesmo colaborador.
 
-O relacionamento entre tarefas e colaboradores é representado pela entidade associativa Atribuição, sem exigir um responsável único por tarefa.
+O fluxo de status deve respeitar a sequência Pendente, Em Andamento e Concluída, com registro das alterações em `HISTORICO_STATUS`.
 
-O fluxo de status utiliza exclusivamente Pendente, Em Andamento e Concluída, respeitando a sequência de transições definida.
-
-As regras apresentadas devem ser mantidas alinhadas à documentação oficial do projeto e às decisões aprovadas pela equipe.
+A especificação deve permanecer compatível com o modelo lógico, o dicionário de dados e o catálogo de regras de negócio aprovados pela equipe.
