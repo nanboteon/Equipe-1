@@ -44,6 +44,7 @@ Equipe-1/
     ├── 01_inventario_dados.md
     ├── 02_modelo_conceitual_v1.pdf
     ├── 03_decisoes_modelagem.md
+    ├── 04_diagrama_logico_v1.pptx
     ├── 04_modelo_logico_v1.pdf
     ├── 05_dicionario_dados_v1.md
     └── 06_regras_integridade_v1.md
